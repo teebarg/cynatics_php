@@ -42,7 +42,7 @@ abstract class Repository
 
     public function all() {
         $limit = request('limit', 10);
-        $resp = $this->model::paginate($limit);
+        $resp = $this->model::orderBy('id')->paginate($limit);
         return $resp;
     }
 

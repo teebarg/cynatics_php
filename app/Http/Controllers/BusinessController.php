@@ -7,6 +7,7 @@ use App\Http\Filters\BusinessFilter;
 use App\Http\Requests\CreateBusinessRequest;
 use App\Http\Requests\UpdateBusinessRequest;
 use App\Repositories\BusinessRepository;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class BusinessController extends BaseController
@@ -49,9 +50,12 @@ class BusinessController extends BaseController
      * @param Business $business
      * @return Response|Response
      */
-    public function show(Business $business)
+    public function show(Business $business, Request $request)
     {
-        $business->increment('views');
+        if ($request->input('view')){
+            $business->increment('views');
+        }
+
         return $this->sendSuccess($business->toArray(), 'Business retrieved successfully');
     }
 
