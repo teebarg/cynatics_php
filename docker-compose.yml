@@ -1,0 +1,67 @@
+version: '3.5'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: init_php
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: init_webserver
+    tty: true
+    ports:
+      - 600:80
+      - 601:443
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #postgres
+  db:
+    container_name: init_db
+    image: postgres
+    environment:
+      POSTGRES_DB: init
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - 602:5432
+    networks:
+      - app-network
+
+  #adminer
+  adminer:
+    image: adminer
+    container_name: init_dbAdmin
+    ports:
+      - 603:8080
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    name: init
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
