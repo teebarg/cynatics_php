@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\ImageUploader;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
 
 class ImageRequest extends FormRequest
 {
@@ -26,18 +24,19 @@ class ImageRequest extends FormRequest
      */
     public function rules()
     {
-        Validator::extend('is_base64', function($attribute, $value, $params, $validator) {
-            return ImageUploader::check_base64_image($value);
-        });
         switch ($this->method()) {
             case 'POST':
-            case 'PUT': {
                 return [
-                    'image' => 'required|string'
+                    'image' => 'required|mimes:jpeg,bmp,png',
+                    'model' => 'required|string',
+                    'target' => 'required|integer'
                 ];
-            }
+
+            case 'PUT':
+                return [
+                    'image' => 'required|mimes:jpeg,bmp,png',
+                ];
             default:break;
         }
     }
-
 }

@@ -8,7 +8,9 @@ use App\Helpers\ResponseMessages;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
 
@@ -49,9 +51,9 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Throwable $e
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      */
     public function render($request, Throwable $e)
@@ -65,13 +67,15 @@ class Handler extends ExceptionHandler
             );
         } elseif ($e instanceof MethodNotAllowedHttpException) {
             return ResponseHelper::createErrorResponse(
-                ResponseMessages::ROUTE_NOT_FOUND, ResponseCodes::ROUTE_NOT_FOUND, [], 404
+                ResponseMessages::ROUTE_NOT_FOUND, ResponseCodes::ROUTE_NOT_FOUND, [], ResponseCodes::RESOURCE_NOT_FOUND
             );
         } elseif ($e instanceof AuthenticationException) {
             return ResponseHelper::createErrorResponse($e->getMessage(), ResponseCodes::RESOURCE_AUTHORISATION_ERROR, [], ResponseCodes::UNAUTHENTICATED);
         }  elseif ($e instanceof \Aws\S3\Exception\S3Exception) {
-            return ResponseHelper::createErrorResponse($e->getMessage(), ResponseCodes::RESOURCE_AUTHORISATION_ERROR, [], ResponseCodes::UNAUTHENTICATED);
-        }else {
+            return ResponseHelper::createErrorResponse($e->getMessage(), ResponseCodes::RESOURCE_AUTHORISATION_ERROR, [], ResponseCodes::UNAUTHORIZED);
+        }elseif ($e instanceof \Spatie\Permission\Exceptions\UnauthorizedException){
+            return ResponseHelper::createErrorResponse($e->getMessage(), $e->getCode(), [], ResponseCodes::UNAUTHORIZED);
+        } else {
             return ResponseHelper::createErrorResponse(
                 ResponseMessages::EXCEPTION_THROWN, ResponseCodes::EXCEPTION_THROWN,
                 [

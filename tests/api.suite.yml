@@ -1,0 +1,14 @@
+class_name: ApiTester
+modules:
+  enabled:
+    - REST:
+        url: /api/v1
+        depends: Laravel5
+    - \Helper\Api
+  config:
+    - Laravel5:
+        environment_file: .env.testing
+    - Db:
+      dsn: 'mysql:host=%DB_HOST%;dbname=%DB_DATABASE%'
+      user: '%DB_USERNAME%'
+      password: '%DB_PASSWORD%'

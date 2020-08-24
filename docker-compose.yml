@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: init_php
+    container_name: glab_php
     tty: true
     environment:
       SERVICE_NAME: app
@@ -15,13 +15,15 @@ services:
     volumes:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    external_links:
+      - myredisdb
     networks:
       - app-network
 
   #Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: init_webserver
+    container_name: glab_webserver
     tty: true
     ports:
       - 600:80
@@ -34,10 +36,10 @@ services:
 
   #postgres
   db:
-    container_name: init_db
+    container_name: glab_db
     image: postgres
     environment:
-      POSTGRES_DB: init
+      POSTGRES_DB: glab
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
     volumes:
@@ -47,19 +49,31 @@ services:
     networks:
       - app-network
 
+  #redis service
+  redis:
+    image: redis:alpine
+    container_name: glab_redisdb
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "605:6379"
+    command: redis-server --appendonly yes
+    networks:
+      - app-network
+
   #adminer
   adminer:
     image: adminer
-    container_name: init_dbAdmin
+    container_name: glab_dbAdmin
     ports:
-      - 603:8080
+      - 6003:8080
     networks:
       - app-network
 
 #Docker Networks
 networks:
   app-network:
-    name: init
+    name: glab
     driver: bridge
 #Volumes
 volumes:

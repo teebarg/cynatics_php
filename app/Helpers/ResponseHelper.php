@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Http\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  *
@@ -35,11 +36,14 @@ class ResponseHelper
         if (!empty($code)) {
             $responseData['code'] = $code;
         }
+        $token = JWTAuth::getToken();
 
         $header = [
             'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE, PATCH',
-            'Access-Control-Allow-Headers' => 'X-Requested-With, Content-Type, Origin, Authorization'
+            'Access-Control-Allow-Headers' => 'X-Requested-With, Content-Type, Origin, Authorization',
+            'Bearer' => $token,
+            'session' => \request()->core_session->sessionId
         ];
         return Response($responseData, $httpResponseCode, $header);
     }

@@ -4,7 +4,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class BusinessFilter extends QueryFilter
+class BusinessFilter extends BaseFilter
 {
     /**
      * @param string $name

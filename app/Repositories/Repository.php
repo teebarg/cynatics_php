@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Exceptions\CustomException;
 use Illuminate\Container\Container as App;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -26,7 +27,7 @@ abstract class Repository
      * @param App $app
      * @param Collection $collection
      * @param Request $request
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      * @throws CustomException
      */
     public function __construct(App $app, Collection $collection, Request $request)
@@ -42,8 +43,13 @@ abstract class Repository
 
     public function all() {
         $limit = request('limit', 10);
-        $resp = $this->model::orderBy('id')->paginate($limit);
-        return $resp;
+        return $this->model::latest()->paginate($limit);
+    }
+
+    public function query($filter)
+    {
+        $limit = request('limit', 10);
+        return $this->model::filter($filter)->orderBy('created_at')->paginate($limit);
     }
 
     public function store($data) {
@@ -62,7 +68,7 @@ abstract class Repository
 
     /**
      * @return Model
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      * @throws CustomException
      */
     public function makeModel()
@@ -75,7 +81,7 @@ abstract class Repository
      *
      * @param $eloquentModel
      * @return Model
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      * @throws CustomException
      */
     public function setModel($eloquentModel)

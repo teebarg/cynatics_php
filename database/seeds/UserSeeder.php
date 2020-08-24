@@ -1,8 +1,9 @@
 <?php
 
+use App\Helpers\SpatieHelper;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -13,10 +14,25 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'Administrator',
+        $user = Factory(App\User::class)->create([
+            'username' => 'Super Admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('password')
         ]);
+        $user->assignRole(Role::where('name', SpatieHelper::SUPER_ADMIN)->first());
+
+        $user = Factory(App\User::class)->create([
+            'username' => 'Admin',
+            'email' => 'admin2@admin.com',
+            'password' => Hash::make('password')
+        ]);
+        $user->assignRole(Role::where('name', SpatieHelper::ADMIN)->first());
+
+        $user = Factory(App\User::class)->create([
+            'username' => 'User',
+            'email' => 'user@user.com',
+            'password' => Hash::make('password')
+        ]);
+        $user->assignRole(Role::where('name', SpatieHelper::USER)->first());
     }
 }

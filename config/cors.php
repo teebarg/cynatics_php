@@ -15,17 +15,17 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    'paths' => ['api/*', '*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*', 'http://localhost:3000'],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => ['*'],
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    'exposed_headers' => ['bearer', 'Access-Control-Allow-Origin'],
 
     'max_age' => 0,
 
