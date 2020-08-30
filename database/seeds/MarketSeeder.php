@@ -15,10 +15,10 @@ class MarketSeeder extends Seeder
         DB::table('markets')->truncate();
 
         $markets= [
-            ['name' => 'Double Chance'],
-            ['name' => 'Correct Score'],
-            ['name' => 'Multi Goal'],
-            ['name' => '1X2']
+            ['name' => 'Double Chance', 'slug' => 'double-chance'],
+            ['name' => 'Correct Score', 'slug' => 'correct-score'],
+            ['name' => 'Multi Goal', 'slug' => 'multi-goal'],
+            ['name' => '1X2', 'slug' => '1x2']
         ];
 
         DB::table('markets')->insert($markets);

@@ -73,5 +73,4 @@ Route::post('/slip/{slip}/checkout', ['uses' => 'SlipController@checkout']);
 Route::post('/bookmaker_game/{game}/{bookmaker}', ['uses' => 'BookmakerGameController@addBooking']);
 Route::delete('/bookmaker_game/{game}/{bookmaker}', ['uses' => 'BookmakerGameController@removeBooking']);
 
-Route::get('/tracker/visitor', ['uses' => 'TrackerController@visitor']);
-Route::get('/tracker/session', ['uses' => 'TrackerController@session']);
+Route::get('/home', ['uses' => 'HomeController@index']);

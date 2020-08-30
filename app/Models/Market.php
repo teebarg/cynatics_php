@@ -4,10 +4,7 @@ namespace App\Models;
 
 use App\Http\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * Class Country
@@ -16,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  *
  * @property string $name
  */
-class Market extends Model
+class Market extends Model implements HasSlug
 {
     use Filterable;
     protected $guarded = [];
@@ -54,6 +51,16 @@ class Market extends Model
             'name' => 'sometimes|required|unique:markets,name,' . $id,
             'is_active' => 'sometimes|required|boolean'
         ];
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function hasSlug()
+    {
+        return true;
     }
 
     /**

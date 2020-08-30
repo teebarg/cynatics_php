@@ -17,7 +17,13 @@ class DatabaseSeeder extends Seeder
                  RoleSeeder::class,
                  UserSeeder::class,
                  CountrySeeder::class,
-//                 BusinessSeeder::class,
+                 CompetitionSeeder::class,
+                 ClubSeeder::class,
+                 MarketSeeder::class,
+                 OddSeeder::class,
+                 GameStatusSeeder::class,
+                 SportSeeder::class,
+                 BookmakerSeeder::class
              ]);
     }
 }

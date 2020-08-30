@@ -4,11 +4,13 @@
 namespace App\Repositories;
 
 use App\Exceptions\CustomException;
+use App\Models\HasSlug;
 use Illuminate\Container\Container as App;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 abstract class Repository
 {
@@ -53,10 +55,16 @@ abstract class Repository
     }
 
     public function store($data) {
+        if($this->model instanceof HasSlug){
+            $data['slug'] = Str::slug($data['name'], '-');
+        }
         return $this->model::create($data);
     }
 
     public function update($model, $data) {
+        if($this->model instanceof HasSlug && isset($data['name'])){
+            $data['slug'] = Str::slug($data['name'], '-');
+        }
         $model->update($data);
         return $model;
     }
