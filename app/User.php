@@ -3,10 +3,12 @@
 namespace App;
 
 use App\Http\Filters\Filterable;
+use App\Models\Image;
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\WelcomeEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -18,7 +20,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     use HasRoles;
     use Filterable;
 
-    protected $with = ['roles', 'permissions'];
+    protected $with = ['roles', 'permissions', 'image'];
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +48,16 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * A User has one Image
+     *
+     * @return MorphOne
+     */
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 
     public function hasVerifiedEmail()
     {

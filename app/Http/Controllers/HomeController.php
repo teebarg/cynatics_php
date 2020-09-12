@@ -2,27 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\HomeService;
+use Illuminate\Http\Response;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
+    /**
+     * @var HomeService
+     */
+    private $homeService;
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param HomeService $homeService
      */
-    public function __construct()
+    public function __construct(HomeService $homeService)
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
+        $this->homeService = $homeService;
     }
 
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Response
      */
     public function index()
     {
-        return view('home');
+        $result = $this->homeService->getHomeData();
+        return $this->sendSuccess($result, 'Items retrieved successfully');
     }
 }

@@ -43,6 +43,7 @@ class GameImport implements ToModel, WithHeadingRow
         $gameItem->home()->associate(Club::find($data['home']));
         $gameItem->away()->associate(Club::find($data['away']));
         $gameItem->game_id = $this->gameId;
+        $gameItem->bookie_odd = $row['bookie_odd'] ?? 0;
 
         $gameItem->save();
 

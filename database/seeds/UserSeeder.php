@@ -4,6 +4,7 @@ use App\Helpers\SpatieHelper;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
         $user->assignRole(Role::where('name', SpatieHelper::SUPER_ADMIN)->first());
+        $user->syncPermissions(Permission::all());
 
         $user = Factory(App\User::class)->create([
             'username' => 'Admin',

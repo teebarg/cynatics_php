@@ -44,8 +44,9 @@ class ImageRepository extends Repository
      */
     public function store($data)
     {
-        $model = app('App\Models\\' . Str::studly($data['model']))->findOrFail($data['target']);
-        $upload = $this->imageUploader->upload($data['image'], $model->name);
+        $path = $data['model'] == 'user' ? 'App\\' : 'App\Models\\';
+        $model = app($path . Str::studly($data['model']))->findOrFail($data['target']);
+        $upload = $this->imageUploader->upload($data['image'], $model->name ?? $data['model']);
         if ($upload[0]){
             $model->image()->create(['image' => $upload[1]]);
             return $model->fresh();

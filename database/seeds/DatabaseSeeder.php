@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
                  OddSeeder::class,
                  GameStatusSeeder::class,
                  SportSeeder::class,
-                 BookmakerSeeder::class
+                 BookmakerSeeder::class,
+                 AdSlotSeeder::class
              ]);
     }
 }

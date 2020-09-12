@@ -23,6 +23,7 @@ class CreateGameItemsTable extends Migration
             $table->unsignedBigInteger('competition_id')->index();
             $table->unsignedBigInteger('odd_id')->index();
             $table->unsignedBigInteger('game_status_id')->default(1)->index();
+            $table->float('bookie_odd')->default(0);
             $table->timestamps();
 
             $table->foreign('game_id')->references('id')->on('games');

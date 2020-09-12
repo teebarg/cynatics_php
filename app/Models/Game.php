@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Game extends Model
 {
 
+    const PREMIUM = 'hot-pick';
+    const FREE = 'free-pick';
+
     use Filterable;
     protected $with = ['gameItems'];
 
@@ -29,7 +32,8 @@ class Game extends Model
     {
         return [
             'game_date' => 'required|date',
-            'market_id' => 'required|exists:markets,id'
+            'market_id' => 'required|exists:markets,id',
+            'total_odd' => 'required|numeric'
         ];
     }
 
@@ -47,7 +51,8 @@ class Game extends Model
             'game_number' => 'sometimes|required',
             'market_id' => 'sometimes|required|exists:markets,id',
             'game_status_id' => 'sometimes|required|exists:game_statuses,id',
-            'settled' => 'sometimes|required|boolean'
+            'settled' => 'sometimes|required|boolean',
+            'total_odd' => 'sometimes|required|numeric'
         ];
     }
 
@@ -131,7 +136,8 @@ class Game extends Model
             "game_items" => $this->gameItems,
             "id" => $this->id,
             "odds" => $this->odds,
-            "bookings" => $this->bookmakers
+            "bookings" => $this->bookmakers,
+            "total_odd" => $this->total_odd
         ];
     }
 }

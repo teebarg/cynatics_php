@@ -137,8 +137,10 @@ class GameItem extends Model
             "id" => $this->id,
             "home" => $this->home->name ?? '',
             "home_id" => $this->home->id ?? '',
+            "home_img" => $this->home->image->image ?? '',
             "away" => $this->away->name ?? '',
             "away_id" => $this->away->id ?? '',
+            "away_img" => $this->away->image->image ?? '',
             "competition" => $this->competition->name,
             "competition_id" => $this->competition->id,
             "game_id" => $this->game_id,
@@ -147,8 +149,10 @@ class GameItem extends Model
             "match_date" => $this->match_date,
             "odd" => $this->odd->name,
             "odd_id" => $this->odd->id,
+            "odd_type" => $this->odd->market->name,
             "odds" => $this->odds,
-            "result" => $this->result
+            "result" => $this->result,
+            "bookie_odd" => $this->bookie_odd
         ];
     }
 }

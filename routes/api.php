@@ -51,6 +51,8 @@ Route::apiResource('user', 'UserController');
 Route::apiResource('game_item', 'GameItemController');
 Route::apiResource('bookmaker', 'BookmakerController');
 Route::apiResource('image', 'ImageController');
+Route::apiResource('advert', 'AdvertController');
+Route::apiResource('ad_slot', 'AdSlotController');
 
 
 Route::post('/me', 'Auth\MeController@me');

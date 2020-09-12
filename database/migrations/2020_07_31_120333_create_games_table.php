@@ -17,6 +17,7 @@ class CreateGamesTable extends Migration
             $table->id();
             $table->string('game_number');
             $table->date('game_date');
+            $table->float('total_odd')->default(0);
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('game_status_id')->default(1)->index();
             $table->unsignedBigInteger('market_id')->index();

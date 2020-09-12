@@ -16,7 +16,7 @@ class SpatieHelper
     const ADMIN = 'Admin';
     const USER = 'User';
     const PERMISSIONS = [
-        'Create Country', 'Edit Country', 'Delete Country'
+        'Create', 'Edit', 'Delete'
     ];
 
 }
