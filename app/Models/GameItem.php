@@ -28,6 +28,7 @@ class GameItem extends Model
             'away_id' => 'required|exists:clubs,id',
             'competition_id' => 'required|exists:competitions,id',
             'odd_id' => 'required|exists:odds,id',
+            'bookie_odd' => 'required|numeric'
         ];
     }
 
@@ -48,7 +49,8 @@ class GameItem extends Model
             'away_id' => 'sometimes|required|exists:clubs,id',
             'game_status_id' => 'sometimes|required|exists:game_statuses,id',
             'competition_id' => 'sometimes|required|exists:competitions,id',
-            'odd_id' => 'sometimes|required|exists:odds,id'
+            'odd_id' => 'sometimes|required|exists:odds,id',
+            'bookie_odd' => 'sometimes|required|numeric'
         ];
     }
 

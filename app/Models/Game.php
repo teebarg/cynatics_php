@@ -129,8 +129,10 @@ class Game extends Model
         return [
             "game_date" => $this->game_date,
             "game_number" => $this->game_number,
-            "game_status" => $this->gameStatus,
-            "market" => $this->market,
+            "game_status_id" => $this->gameStatus->id,
+            "game_status_name" => $this->gameStatus->status,
+            "market_name" => $this->market->name,
+            "market_id" => $this->market->id,
             "settled" => $this->settled,
             "user" => $this->user->username,
             "game_items" => $this->gameItems,
