@@ -18,6 +18,8 @@ class MarketSeeder extends Seeder
             ['name' => 'Double Chance', 'slug' => 'double-chance'],
             ['name' => 'Correct Score', 'slug' => 'correct-score'],
             ['name' => 'Multi Goal', 'slug' => 'multi-goal'],
+            ['name' => 'Hot Pick', 'slug' => 'hot-pick'],
+            ['name' => 'Free Pick', 'slug' => 'free-pick'],
             ['name' => '1X2', 'slug' => '1x2']
         ];
 
